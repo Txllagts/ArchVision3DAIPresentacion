@@ -1,0 +1,14 @@
+{
+  "name": "archvision-3d-ai-monorepo",
+  "version": "1.0.0",
+  "description": "ArchVision 3D AI - Parametric Architectural Platform",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -k -n \"BACKEND,FRONTEND\" -c \"magenta,cyan\" \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\"",
+    "start": "concurrently -k -n \"BACKEND,FRONTEND\" -c \"magenta,cyan\" \"npm --prefix backend start\" \"npm --prefix frontend run dev\"",
+    "install:all": "npm install --prefix backend && npm install --prefix frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
