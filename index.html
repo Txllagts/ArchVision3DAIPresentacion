@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArchVision 3D AI — Plataforma Paramétrica de Arquitectura Inteligente</title>
+  <meta name="description" content="Transforma fotografías, croquis y planos 2D en modelos 3D arquitectónicos paramétricos y editables con Inteligencia Artificial, Three.js y FastAPI.">
+  <meta name="keywords" content="arquitectura 3D, IA arquitectura, planimetría 2D a 3D, TripoSR, Three.js, BIM, modelado paramétrico">
+  <meta name="author" content="ArchVision 3D AI Team">
+  <meta property="og:title" content="ArchVision 3D AI — Del Boceto al Modelo 3D Paramétrico">
+  <meta property="og:description" content="Plataforma de modelado arquitectónico 3D impulsada por IA. La IA construye la base, tú mantienes el control total.">
+  <meta property="og:type" content="website">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Three.js & OrbitControls -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient Glow & Grid Background -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="grid-overlay"></div>
+
+  <!-- Header / Navigation -->
+  <header class="site-header" id="site-header">
+    <div class="header-container">
+      <a href="#hero" class="brand-logo" id="brand-logo">
+        <div class="logo-symbol">
+          <i data-lucide="box"></i>
+          <span class="logo-pulse"></span>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">ArchVision <span class="badge-ai">3D AI</span></span>
+          <span class="logo-subtitle">Parametric Spatial Intelligence</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="main-nav" id="main-nav">
+        <ul class="nav-links">
+          <li><a href="#filosofia" class="nav-link">Filosofía</a></li>
+          <li><a href="#capacidades" class="nav-link">Capacidades</a></li>
+          <li><a href="#visor-interactivo" class="nav-link">Visor 3D</a></li>
+          <li><a href="#arquitectura" class="nav-link">Arquitectura</a></li>
+          <li><a href="#asistente" class="nav-link">Asistente IA</a></li>
+          <li><a href="#roadmap" class="nav-link highlight-link">
+            <span class="radar-dot"></span> Próximos Hitos
+          </a></li>
+        </ul>
+      </nav>
+
+      <!-- Actions -->
+      <div class="header-actions">
+        <!-- Theme Toggle -->
+        <button class="theme-toggle-btn" id="theme-toggle" aria-label="Cambiar modo claro / oscuro" title="Cambiar tema">
+          <i data-lucide="sun" class="icon-sun"></i>
+          <i data-lucide="moon" class="icon-moon"></i>
+        </button>
+
+        <a href="#visor-interactivo" class="btn btn-sm btn-primary header-cta">
+          <span>Probar Editor 3D</span>
+          <i data-lucide="arrow-up-right"></i>
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Abrir menú de navegación">
+          <i data-lucide="menu" class="icon-open"></i>
+          <i data-lucide="x" class="icon-close"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Overlay -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-content">
+      <ul class="mobile-nav-links">
+        <li><a href="#filosofia" class="mobile-nav-link"><i data-lucide="compass"></i> Filosofía de Diseño</a></li>
+        <li><a href="#capacidades" class="mobile-nav-link"><i data-lucide="cpu"></i> Capacidades Principales</a></li>
+        <li><a href="#visor-interactivo" class="mobile-nav-link"><i data-lucide="box"></i> Simulador 3D / 2D</a></li>
+        <li><a href="#arquitectura" class="mobile-nav-link"><i data-lucide="layers"></i> Arquitectura Técnica</a></li>
+        <li><a href="#asistente" class="mobile-nav-link"><i data-lucide="bot"></i> Copiloto Arquitectónico</a></li>
+        <li><a href="#roadmap" class="mobile-nav-link highlight"><i data-lucide="sparkles"></i> Próximos Hitos & Roadmap</a></li>
+      </ul>
+      <div class="mobile-drawer-footer">
+        <a href="#visor-interactivo" class="btn btn-primary btn-block">
+          <i data-lucide="play"></i> Explorar Demo Interactiva
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge animate-fade-in">
+            <span class="badge-dot"></span>
+            <span>Nueva Generación de Modelado Arquitectónico</span>
+            <span class="badge-tag">v2.0 Beta</span>
+          </div>
+
+          <h1 class="hero-title animate-fade-in delay-1">
+            De Fotografías y Planos a <span class="text-gradient">Modelos 3D Paramétricos</span> con IA
+          </h1>
+
+          <p class="hero-description animate-fade-in delay-2">
+            <strong>ArchVision 3D AI</strong> fusiona visión artificial profunda (TripoSR & InstantMesh HQ), extrusión vectorial de planos 2D y un motor paramétrico en Three.js. <em>La Inteligencia Artificial construye la base geométrica, mientras tú mantienes el control dimensional absoluto.</em>
+          </p>
+
+          <div class="hero-actions animate-fade-in delay-3">
+            <a href="#visor-interactivo" class="btn btn-lg btn-primary shadow-glow">
+              <i data-lucide="eye"></i>
+              <span>Explorar Visor en Vivo</span>
+            </a>
+            <a href="#capacidades" class="btn btn-lg btn-glass">
+              <i data-lucide="sparkles"></i>
+              <span>Ver Capacidades</span>
+            </a>
+          </div>
+
+          <!-- Hero Metrics Bar -->
+          <div class="hero-metrics animate-fade-in delay-4">
+            <div class="metric-card">
+              <div class="metric-value"><span class="counter" data-target="100">0</span>%</div>
+              <div class="metric-label">Control Paramétrico</div>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-card">
+              <div class="metric-value">&lt; <span class="counter" data-target="3">0</span>s</div>
+              <div class="metric-label">Extrusión de Planos</div>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-card">
+              <div class="metric-value">2D <i data-lucide="repeat" class="inline-icon"></i> 3D</div>
+              <div class="metric-label">Sincronización Dual</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Visual Showcase -->
+        <div class="hero-visual animate-scale-in">
+          <div class="visual-card-wrapper glass-panel">
+            <div class="card-header-bar">
+              <div class="window-dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <div class="window-title">ArchVision Workspace — Escena Paramétrica</div>
+              <div class="window-status"><span class="status-live"></span> En línea</div>
+            </div>
+
+            <!-- Mini Interactive Visual Stage -->
+            <div class="hero-canvas-container" id="hero-3d-container">
+              <canvas id="hero-webgl-canvas"></canvas>
+              <div class="hero-canvas-overlay">
+                <div class="canvas-tag top-left">
+                  <i data-lucide="cpu"></i> <span>Motor Three.js + PBR</span>
+                </div>
+                <div class="canvas-tag top-right">
+                  <i data-lucide="compass"></i> <span>Auto-Snapping Activo</span>
+                </div>
+                <div class="canvas-tag bottom-left">
+                  <i data-lucide="shield-check"></i> <span>Geometría Watertight</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-footer-controls">
+              <div class="pipeline-steps">
+                <span class="step-pill active"><i data-lucide="image"></i> Imagen / Plano</span>
+                <span class="step-arrow"><i data-lucide="chevron-right"></i></span>
+                <span class="step-pill active"><i data-lucide="sparkles"></i> IA Inferencia</span>
+                <span class="step-arrow"><i data-lucide="chevron-right"></i></span>
+                <span class="step-pill active"><i data-lucide="box"></i> Modelo 3D Paramétrico</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Philosophy Section -->
+    <section class="section philosophy-section" id="filosofia">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-badge"><i data-lucide="compass"></i> Principio Rector</div>
+          <h2 class="section-title">La IA Construye el Borrador, <span class="text-gradient">Tú Dominas la Geometría</span></h2>
+          <p class="section-subtitle">
+            A diferencia de las herramientas que generan mallas 3D opacas e ineditables, ArchVision convierte cada inferencia en <strong>entidades arquitectónicas vivas</strong>: muros con vanos booleanos, losas, columnas y cubiertas calculadas con precisión milimétrica.
+          </p>
+        </div>
+
+        <div class="philosophy-grid">
+          <div class="philosophy-card glass-panel">
+            <div class="card-icon gradient-amber">
+              <i data-lucide="drafting-compass"></i>
+            </div>
+            <h3>Fuente de Verdad Paramétrica</h3>
+            <p>
+              La escena se describe en un documento formal <code>SceneDocument</code>. Three.js es únicamente la representación visual reactiva: los muros, puertas y techos se recalculan dinámicamente sin degradación de malla.
+            </p>
+            <ul class="feature-checklist">
+              <li><i data-lucide="check"></i> Muros con grosor, altura y vanos dinámicos</li>
+              <li><i data-lucide="check"></i> Snapping inteligente a vértices, ejes y cuadrícula</li>
+              <li><i data-lucide="check"></i> Deshacer / Rehacer ilimitado con historial atómico</li>
+            </ul>
+          </div>
+
+          <div class="philosophy-card glass-panel">
+            <div class="card-icon gradient-indigo">
+              <i data-lucide="brain-circuit"></i>
+            </div>
+            <h3>Pipeline Híbrido de IA & Visión</h3>
+            <p>
+              Combina visión computacional clásica (detección de contornos de Otsu y transformadas de Hough) con modelos neuronales de vanguardia (TripoSR y InstantMesh HQ) con alineación PCA y reconstrucción Poisson.
+            </p>
+            <ul class="feature-checklist">
+              <li><i data-lucide="check"></i> Reconstrucción desde una sola fotografía</li>
+              <li><i data-lucide="check"></i> Calibración dimensional con escala conocida</li>
+              <li><i data-lucide="check"></i> Transferencia de color RGBA con árboles k-d</li>
+            </ul>
+          </div>
+
+          <div class="philosophy-card glass-panel">
+            <div class="card-icon gradient-cyan">
+              <i data-lucide="split"></i>
+            </div>
+            <h3>Sincronización Bidireccional 2D / 3D</h3>
+            <p>
+              Trabaja en vista 2D de plano, perspectiva 3D inmersiva o vista dividida simultánea. Cualquier cambio en 2D se refleja en tiempo real en la escena 3D y viceversa con cálculo instantáneo de áreas y perímetros.
+            </p>
+            <ul class="feature-checklist">
+              <li><i data-lucide="check"></i> Detección automática de habitaciones y metros cuadrados</li>
+              <li><i data-lucide="check"></i> Vistas ortográficas (Superior, Frontal, Lateral)</li>
+              <li><i data-lucide="check"></i> Paleta de comandos universal <code>Ctrl+K</code></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive 3D Simulator Section -->
+    <section class="section interactive-demo-section" id="visor-interactivo">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-badge"><i data-lucide="play-circle"></i> Experiencia Interactiva</div>
+          <h2 class="section-title">Prueba el <span class="text-gradient">Simulador Arquitectónico 3D</span></h2>
+          <p class="section-subtitle">
+            Interactúa en tiempo real con la escena. Cambia estilos de cubierta, aplica materiales PBR, modifica la hora del sol y alterna modos de visualización.
+          </p>
+        </div>
+
+        <div class="demo-interactive-wrapper glass-panel">
+          <!-- Toolbar Top -->
+          <div class="demo-toolbar">
+            <div class="toolbar-group">
+              <span class="group-label">Vista:</span>
+              <button class="tool-btn active" id="btn-view-3d" data-view="3d" title="Perspectiva 3D Orbit">
+                <i data-lucide="box"></i> 3D Perspectiva
+              </button>
+              <button class="tool-btn" id="btn-view-2d" data-view="2d" title="Planta 2D Técnica">
+                <i data-lucide="layout-grid"></i> 2D Planta
+              </button>
+              <button class="tool-btn" id="btn-view-wire" data-view="wireframe" title="Estructura Alámbrica">
+                <i data-lucide="grid"></i> Alámbrico
+              </button>
+            </div>
+
+            <div class="toolbar-group">
+              <span class="group-label">Cubierta:</span>
+              <button class="tool-btn active" data-roof="gable" id="btn-roof-gable" title="Cubierta a Dos Aguas">
+                <i data-lucide="triangle"></i> Dos Aguas
+              </button>
+              <button class="tool-btn" data-roof="flat" id="btn-roof-flat" title="Cubierta Plana">
+                <i data-lucide="square"></i> Plana
+              </button>
+              <button class="tool-btn" data-roof="shed" id="btn-roof-shed" title="Una Pendiente">
+                <i data-lucide="chevrons-up"></i> Una Pendiente
+              </button>
+            </div>
+
+            <div class="toolbar-group">
+              <span class="group-label">Materiales:</span>
+              <div class="material-swatches">
+                <button class="swatch-btn active" data-material="modern" title="Estuco Blanco & Madera">
+                  <span class="swatch-color modern"></span>
+                </button>
+                <button class="swatch-btn" data-material="brick" title="Ladrillo Visto">
+                  <span class="swatch-color brick"></span>
+                </button>
+                <button class="swatch-btn" data-material="concrete" title="Hormigón Visto & Piedra">
+                  <span class="swatch-color concrete"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="toolbar-group">
+              <span class="group-label">Estudio Solar:</span>
+              <button class="tool-btn" id="btn-sun-toggle" title="Alternar Día / Tarde / Noche">
+                <i data-lucide="sun" id="sun-icon"></i> <span id="sun-label">Mediodía</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Main 3D Stage -->
+          <div class="interactive-stage-container" id="interactive-3d-stage">
+            <canvas id="interactive-webgl-canvas"></canvas>
+            
+            <!-- HUD Information -->
+            <div class="stage-hud top-left">
+              <div class="hud-pill">
+                <span class="hud-indicator pulse"></span>
+                <span id="hud-status">Render Activo: 60 FPS</span>
+              </div>
+              <div class="hud-data-box">
+                <div class="hud-row"><span class="hud-key">Superficie:</span> <span class="hud-val" id="hud-area">142.8 m²</span></div>
+                <div class="hud-row"><span class="hud-key">Muros:</span> <span class="hud-val" id="hud-walls">14 segmentos</span></div>
+                <div class="hud-row"><span class="hud-key">Vanos:</span> <span class="hud-val" id="hud-openings">4 ventanas / 2 puertas</span></div>
+              </div>
+            </div>
+
+            <div class="stage-hud bottom-right">
+              <div class="hud-hint">
+                <i data-lucide="mouse-pointer"></i> <span>Arrastra para orbitar | Scroll para zoom | Clic derecho para desplazar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Full Capabilities Grid -->
+    <section class="section capabilities-section" id="capacidades">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-badge"><i data-lucide="sparkles"></i> Arsenal Tecnológico</div>
+          <h2 class="section-title">Todo lo que puedes hacer en <span class="text-gradient">ArchVision 3D AI</span></h2>
+          <p class="section-subtitle">
+            Una suite integral pensada para arquitectos, diseñadores de interiores, desarrolladores inmobiliarios y constructores.
+          </p>
+        </div>
+
+        <div class="capabilities-grid">
+          <!-- Item 1 -->
+          <div class="cap-card glass-panel">
+            <div class="cap-header">
+              <div class="cap-icon-box gradient-purple">
+                <i data-lucide="camera"></i>
+              </div>
+              <div class="cap-badge ready">Disponible</div>
+            </div>
+            <h3>Foto a Objeto 3D (TripoSR & InstantMesh HQ)</h3>
+            <p>
+              Sube una fotografía de un mueble, fachada o elemento constructivo. El microservicio aplica segmentación RMBG, reconstrucción de superficie de Poisson, alineación PCA y entrega un archivo GLB watertight optimizado.
+            </p>
+            <div class="cap-footer">
+              <code>POST /api/v1/image-to-3d/generate</code>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="cap-card glass-panel">
+            <div class="cap-header">
+              <div class="cap-icon-box gradient-blue">
+                <i data-lucide="scan-line"></i>
+              </div>
+              <div class="cap-badge ready">Disponible</div>
+            </div>
+            <h3>Importación y Extrusión Automática de Planos</h3>
+            <p>
+              Carga planos en JPG, PNG o WebP. Fija la escala calibrando con una medida conocida (ej. una puerta de 0.90 m) y la visión por computador detectará los muros, generando la estructura 3D en segundos.
+            </p>
+            <div class="cap-footer">
+              <span>Umbrales Otsu + Transformada de Hough</span>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="cap-card glass-panel">
+            <div class="cap-header">
+              <div class="cap-icon-box gradient-emerald">
+                <i data-lucide="door-open"></i>
+              </div>
+              <div class="cap-badge ready">Disponible</div>
+            </div>
+            <h3>Vanos Booleanos y Elementos Paramétricos</h3>
+            <p>
+              Coloca puertas y ventanas con un solo clic: el hueco en el muro se calcula dinámicamente con geometría booleana sin romper la topología. Inserta columnas, escaleras configurables y cubiertas adaptables.
+            </p>
+            <div class="cap-footer">
+              <span>Geometría paramétrica en tiempo real</span>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="cap-card glass-panel">
+            <div class="cap-header">
+              <div class="cap-icon-box gradient-amber">
+                <i data-lucide="palette"></i>
+              </div>
+              <div class="cap-badge ready">Disponible</div>
+            </div>
+            <h3>Estudio de Materiales PBR y Pincel Rápido</h3>
+            <p>
+              Catálogo de texturas físicas: ladrillo visto, hormigón, maderas nobles, baldosas cerámicas, tejas y metales. Arrastra una muestra a la escena o presiona la tecla <code>G</code> para pintar con el pincel arquitectónico.
+            </p>
+            <div class="cap-footer">
+              <span>Mapas Normales, Rugosidad y Albedo PBR</span>
+            </div>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="cap-card glass-panel">
+            <div class="cap-header">
+              <div class="cap-icon-box gradient-indigo">
+                <i data-lucide="bot"></i>
+              </div>
+              <div class="cap-badge ready">Disponible</div>
+            </div>
+            <h3>Copiloto de IA y Auditor de Normativa</h3>
+            <p>
+              Presiona la tecla <code>A</code> para dialogar con el asistente arquitectónico. Pídele crear ambientes, sugerir vanos o auditar tu modelo: detecta habitaciones inaccesibles, vanos flotantes o escaleras incómodas.
+            </p>
+            <div class="cap-footer">
+              <span>Integración con LLM y Comandos Reversibles</span>
+            </div>
+          </div>
+
+          <!-- Item 6 -->
+          <div class="cap-card glass-panel">
+            <div class="cap-header">
+              <div class="cap-icon-box gradient-pink">
+                <i data-lucide="credit-card"></i>
+              </div>
+              <div class="cap-badge ready">Disponible</div>
+            </div>
+            <h3>Gestión de Planes y Suscripciones (Wompi)</h3>
+            <p>
+              Sistema completo de cuotas, control de límites por plan (Gratuito, Pro y Studio) con integración de pasarela de pagos Wompi y almacenamiento seguro en Supabase Storage con URLs firmadas.
+            </p>
+            <div class="cap-footer">
+              <span>Tokens seguros & Almacenamiento privado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Architecture Section -->
+    <section class="section architecture-section" id="arquitectura">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-badge"><i data-lucide="layers"></i> Ingeniería de Software</div>
+          <h2 class="section-title">Arquitectura del Monorepo <span class="text-gradient">Robusta y Escalable</span></h2>
+          <p class="section-subtitle">
+            Estructurado en un monorepo modular con TypeScript estricto, Next.js 15, FastAPI en Python, Supabase y Three.js.
+          </p>
+        </div>
+
+        <div class="arch-diagram-card glass-panel">
+          <div class="diagram-grid">
+            <!-- App Layer -->
+            <div class="arch-block">
+              <div class="arch-block-header">
+                <i data-lucide="layout"></i>
+                <span>Aplicaciones Frontend & Backend Web</span>
+              </div>
+              <div class="arch-tag-list">
+                <div class="arch-tag-item">
+                  <strong>apps/web</strong>
+                  <span>Next.js 15 + React 19 + TypeScript + REST APIs + Three.js Editor</span>
+                </div>
+                <div class="arch-tag-item">
+                  <strong>apps/ai-service</strong>
+                  <span>FastAPI + Python + PyTorch + TripoSR + InstantMesh + OpenCV</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Packages Layer -->
+            <div class="arch-block">
+              <div class="arch-block-header">
+                <i data-lucide="package"></i>
+                <span>Paquetes del Dominio Arquitectónico</span>
+              </div>
+              <div class="package-chips-grid">
+                <div class="pkg-chip"><code>packages/types</code> <span>SceneDocument & Entidades</span></div>
+                <div class="pkg-chip"><code>packages/geometry</code> <span>Booleanos & Mallas</span></div>
+                <div class="pkg-chip"><code>packages/three-engine</code> <span>Materiales PBR & Sol</span></div>
+                <div class="pkg-chip"><code>packages/vision</code> <span>Otsu & Hough Planos</span></div>
+                <div class="pkg-chip"><code>packages/assistant</code> <span>Copiloto & Reglas</span></div>
+                <div class="pkg-chip"><code>packages/database</code> <span>Prisma ORM & Supabase</span></div>
+                <div class="pkg-chip"><code>packages/validation</code> <span>Esquemas Zod</span></div>
+                <div class="pkg-chip"><code>packages/billing</code> <span>Wompi & Cuotas</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Assistant Interactive Showcase -->
+    <section class="section assistant-section" id="asistente">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-badge"><i data-lucide="sparkles"></i> Inteligencia Aumentada</div>
+          <h2 class="section-title">Copiloto y <span class="text-gradient">Auditor Arquitectónico</span></h2>
+          <p class="section-subtitle">
+            No solo dibuja: entiende las relaciones espaciales, comprueba la iluminación natural y audita la coherencia constructiva.
+          </p>
+        </div>
+
+        <div class="assistant-interactive-grid">
+          <!-- Chat Simulation Box -->
+          <div class="chat-sim-card glass-panel">
+            <div class="chat-sim-header">
+              <div class="copilot-avatar">
+                <i data-lucide="bot"></i>
+              </div>
+              <div class="copilot-info">
+                <div class="copilot-name">ArchVision AI Copilot</div>
+                <div class="copilot-status"><span class="dot-online"></span> Listo para asistir (Tecla A)</div>
+              </div>
+              <button class="chat-reset-btn" id="btn-chat-reset" title="Reiniciar conversación">
+                <i data-lucide="rotate-ccw"></i>
+              </button>
+            </div>
+
+            <div class="chat-messages-scroll" id="chat-messages-container">
+              <!-- Default initial messages -->
+              <div class="chat-bubble ai-bubble">
+                <p>¡Hola! Soy tu asistente de diseño espacial. He analizado el proyecto actual: tienes <strong>142.8 m²</strong> construidos con 3 estancias principales. ¿En qué te gustaría avanzar?</p>
+              </div>
+            </div>
+
+            <!-- Quick Action Prompts -->
+            <div class="chat-quick-actions">
+              <button class="quick-prompt-chip" data-prompt="Auditar coherencia del modelo">
+                <i data-lucide="shield-alert"></i> Auditar modelo
+              </button>
+              <button class="quick-prompt-chip" data-prompt="Añadir una habitación de 4x4m con dos ventanas">
+                <i data-lucide="plus-circle"></i> Crear dormitorio 4x4m
+              </button>
+              <button class="quick-prompt-chip" data-prompt="Cambiar la cubierta a estilo dos aguas">
+                <i data-lucide="home"></i> Cambiar cubierta
+              </button>
+            </div>
+
+            <!-- Input area -->
+            <form class="chat-input-bar" id="chat-sim-form">
+              <input type="text" id="chat-user-input" placeholder="Escribe una instrucción arquitectónica..." autocomplete="off">
+              <button type="submit" class="btn-send-chat" id="btn-chat-submit">
+                <i data-lucide="send"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- Auditor Feature List -->
+          <div class="auditor-features-panel glass-panel">
+            <h3 class="panel-heading"><i data-lucide="check-check"></i> Reglas de Auditoría Automática</h3>
+            <div class="audit-rule-item">
+              <div class="audit-rule-icon pass"><i data-lucide="check"></i></div>
+              <div class="audit-rule-info">
+                <strong>Verificación de Accesibilidad</strong>
+                <p>Detecta habitaciones cerradas sin ninguna puerta de entrada o con vanos bloqueados.</p>
+              </div>
+            </div>
+
+            <div class="audit-rule-item">
+              <div class="audit-rule-icon pass"><i data-lucide="check"></i></div>
+              <div class="audit-rule-info">
+                <strong>Vanos y Muros Flotantes</strong>
+                <p>Identifica ventanas fuera del rango geométrico del muro o paredes duplicadas en la misma coordenada.</p>
+              </div>
+            </div>
+
+            <div class="audit-rule-item">
+              <div class="audit-rule-icon alert"><i data-lucide="sun"></i></div>
+              <div class="audit-rule-info">
+                <strong>Ratio de Iluminación Natural</strong>
+                <p>Calcula el porcentaje de superficie vidriada respecto al área útil de cada estancia.</p>
+              </div>
+            </div>
+
+            <div class="audit-rule-item">
+              <div class="audit-rule-icon pass"><i data-lucide="ruler"></i></div>
+              <div class="audit-rule-info">
+                <strong>Cálculo de Escaleras Confortables</strong>
+                <p>Valida la ley de Blondel (2 contrahuellas + 1 huella = 63-65 cm) para evitar peldaños empinados.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PENDING ITEMS & ROADMAP SECTION (PHASES 4 TO 11 PRESENTED AS NEXT MILESTONES) -->
+    <section class="section roadmap-section" id="roadmap">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-badge"><i data-lucide="sparkles"></i> Próximos Desafíos & Futuro</div>
+          <h2 class="section-title">Hitos en Desarrollo y <span class="text-gradient">Próximas Innovaciones</span></h2>
+          <p class="section-subtitle">
+            Descubre las funciones de vanguardia que están siendo implementadas para llevar ArchVision al siguiente nivel de la industria AEC.
+          </p>
+        </div>
+
+        <div class="roadmap-grid">
+          <!-- Milestone 1: Advanced Multi-Format Exports -->
+          <div class="roadmap-card glass-panel" data-category="export">
+            <div class="roadmap-card-header">
+              <div class="milestone-icon-wrapper gradient-blue">
+                <i data-lucide="download"></i>
+              </div>
+              <span class="milestone-status-badge in-progress">
+                <span class="status-dot"></span> En Desarrollo Activo
+              </span>
+            </div>
+            <h3 class="milestone-title">Suite de Exportaciones Multiformato Profesionales</h3>
+            <p class="milestone-desc">
+              Descarga tus proyectos en los estándares universales de la industria para renders, animación, fabricación digital y planos constructivos.
+            </p>
+            <div class="milestone-tags">
+              <span class="tag">GLB / GLTF 2.0</span>
+              <span class="tag">OBJ + MTL</span>
+              <span class="tag">STL (Impresión 3D)</span>
+              <span class="tag">Planos Vectoriales DXF/CAD</span>
+              <span class="tag">Renders 4K Ultra-HD</span>
+            </div>
+            <div class="milestone-progress">
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 75%;"></div>
+              </div>
+              <div class="progress-label"><span>Implementación geométrica</span> <span>75%</span></div>
+            </div>
+          </div>
+
+          <!-- Milestone 2: Photorealistic Raytracing & Solar Simulation -->
+          <div class="roadmap-card glass-panel" data-category="render">
+            <div class="roadmap-card-header">
+              <div class="milestone-icon-wrapper gradient-amber">
+                <i data-lucide="sun-medium"></i>
+              </div>
+              <span class="milestone-status-badge in-progress">
+                <span class="status-dot"></span> En Desarrollo
+              </span>
+            </div>
+            <h3 class="milestone-title">Motor de Renderizado Fotorrealista y Estudio Solar Geo-Posicionado</h3>
+            <p class="milestone-desc">
+              Simulación de iluminación con cielos físicos HDRI y trayectoria solar exacta basada en latitud, longitud, fecha y hora del año para análisis de asoleamiento y eficiencia energética.
+            </p>
+            <div class="milestone-tags">
+              <span class="tag">Cielos Físicos HDRI</span>
+              <span class="tag">Asoleamiento Dinámico</span>
+              <span class="tag">Oclusión Ambiental PBR</span>
+              <span class="tag">Trayectoria Solar Real</span>
+            </div>
+            <div class="milestone-progress">
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 60%;"></div>
+              </div>
+              <div class="progress-label"><span>Cálculo solar y Shaders</span> <span>60%</span></div>
+            </div>
+          </div>
+
+          <!-- Milestone 3: Real-Time Multi-User Collaboration -->
+          <div class="roadmap-card glass-panel" data-category="collab">
+            <div class="roadmap-card-header">
+              <div class="milestone-icon-wrapper gradient-purple">
+                <i data-lucide="users"></i>
+              </div>
+              <span class="milestone-status-badge planned">
+                <span class="status-dot"></span> Próxima Integración
+              </span>
+            </div>
+            <h3 class="milestone-title">Workspaces de Colaboración en Vivo y Enlaces Compartibles</h3>
+            <p class="milestone-desc">
+              Edita proyectos simultáneamente con tu equipo mediante WebSockets y CRDTs. Genera enlaces interactivos de solo lectura para clientes con navegación virtual y visualización en Realidad Aumentada (AR).
+            </p>
+            <div class="milestone-tags">
+              <span class="tag">Colaboración Multiusuario</span>
+              <span class="tag">Cursores en Vivo</span>
+              <span class="tag">Enlaces Web para Clientes</span>
+              <span class="tag">Visor en Realidad Aumentada (AR)</span>
+            </div>
+            <div class="milestone-progress">
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 40%;"></div>
+              </div>
+              <div class="progress-label"><span>Arquitectura WebSocket</span> <span>40%</span></div>
+            </div>
+          </div>
+
+          <!-- Milestone 4: AI Generative Interior Design & Auto-Furnishing -->
+          <div class="roadmap-card glass-panel" data-category="ai">
+            <div class="roadmap-card-header">
+              <div class="milestone-icon-wrapper gradient-emerald">
+                <i data-lucide="armchair"></i>
+              </div>
+              <span class="milestone-status-badge planned">
+                <span class="status-dot"></span> Próxima Integración
+              </span>
+            </div>
+            <h3 class="milestone-title">Diseño Interior Generativo y Amoblado Inteligente</h3>
+            <p class="milestone-desc">
+              Distribución automática de mobiliario contextual adaptada a la tipología de cada habitación (salón, suite, cocina, baño) y estilización automática de materiales de fachada a partir de referencias visuales.
+            </p>
+            <div class="milestone-tags">
+              <span class="tag">Auto-Layout Espacial</span>
+              <span class="tag">Clasificación de Estancias</span>
+              <span class="tag">Estilización de Fachadas</span>
+            </div>
+            <div class="milestone-progress">
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 35%;"></div>
+              </div>
+              <div class="progress-label"><span>Modelos de Inferencia</span> <span>35%</span></div>
+            </div>
+          </div>
+
+          <!-- Milestone 5: BIM & Automated Cost Estimation -->
+          <div class="roadmap-card glass-panel" data-category="bim">
+            <div class="roadmap-card-header">
+              <div class="milestone-icon-wrapper gradient-cyan">
+                <i data-lucide="calculator"></i>
+              </div>
+              <span class="milestone-status-badge planned">
+                <span class="status-dot"></span> Próxima Integración
+              </span>
+            </div>
+            <h3 class="milestone-title">Cómputos Métricos BIM y Presupuesto de Obra en Tiempo Real</h3>
+            <p class="milestone-desc">
+              Cálculo automatizado de la lista de materiales (BOM), cubicación de hormigón, superficie de mampostería, pintura y acabados, exportable directamente a hojas de cálculo con estimación de costos.
+            </p>
+            <div class="milestone-tags">
+              <span class="tag">Listado de Materiales (BOM)</span>
+              <span class="tag">Cubicación de Volúmenes</span>
+              <span class="tag">Presupuestador Paramétrico</span>
+              <span class="tag">Exportación Excel/CSV</span>
+            </div>
+            <div class="milestone-progress">
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 30%;"></div>
+              </div>
+              <div class="progress-label"><span>Motor de Cómputo</span> <span>30%</span></div>
+            </div>
+          </div>
+
+          <!-- Milestone 6: High Performance Cloud AI Clustering -->
+          <div class="roadmap-card glass-panel" data-category="cloud">
+            <div class="roadmap-card-header">
+              <div class="milestone-icon-wrapper gradient-pink">
+                <i data-lucide="server"></i>
+              </div>
+              <span class="milestone-status-badge planned">
+                <span class="status-dot"></span> Próxima Integración
+              </span>
+            </div>
+            <h3 class="milestone-title">Clúster de Inferencia Neuronal en GPU de Alto Rendimiento</h3>
+            <p class="milestone-desc">
+              Escalado horizontal de trabajadores FastAPI con cola Redis / BullMQ para procesamiento paralelo de reconstrucciones InstantMesh en resolución ultra-fina sin latencia de espera.
+            </p>
+            <div class="milestone-tags">
+              <span class="tag">Colas Redis / BullMQ</span>
+              <span class="tag">Inferencia Distribuida</span>
+              <span class="tag">Soporte Multi-GPU</span>
+            </div>
+            <div class="milestone-progress">
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 25%;"></div>
+              </div>
+              <div class="progress-label"><span>Infraestructura Worker</span> <span>25%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing / Plans Section -->
+    <section class="section pricing-section" id="planes">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-badge"><i data-lucide="sparkle"></i> Flexibilidad</div>
+          <h2 class="section-title">Planes Diseñados para <span class="text-gradient">Cada Necesidad</span></h2>
+          <p class="section-subtitle">
+            Empieza gratis y escala a medida que requieras mayor potencia de inferencia 3D y funciones avanzadas de renderizado.
+          </p>
+        </div>
+
+        <div class="pricing-grid">
+          <!-- Starter Plan -->
+          <div class="pricing-card glass-panel">
+            <div class="plan-header">
+              <h3 class="plan-name">Starter Gratuito</h3>
+              <p class="plan-desc">Ideal para explorar el modelado paramétrico y crear tus primeros espacios.</p>
+              <div class="plan-price">
+                <span class="currency">$</span><span class="amount">0</span>
+                <span class="period">/ mes</span>
+              </div>
+            </div>
+            <ul class="plan-features">
+              <li><i data-lucide="check"></i> Hasta 3 proyectos activos</li>
+              <li><i data-lucide="check"></i> Editor paramétrico 2D y 3D</li>
+              <li><i data-lucide="check"></i> Reconstrucción estándar TripoSR</li>
+              <li><i data-lucide="check"></i> Biblioteca de materiales básicos</li>
+              <li><i data-lucide="check"></i> Importación y calibración de planos</li>
+            </ul>
+            <a href="#visor-interactivo" class="btn btn-glass btn-block">Comenzar Ahora</a>
+          </div>
+
+          <!-- Pro Plan -->
+          <div class="pricing-card glass-panel featured-plan">
+            <div class="popular-ribbon">Recomendado</div>
+            <div class="plan-header">
+              <h3 class="plan-name">Pro Architect</h3>
+              <p class="plan-desc">Para profesionales que demandan máxima calidad en mallas e IA.</p>
+              <div class="plan-price">
+                <span class="currency">$</span><span class="amount">29</span>
+                <span class="period">/ mes</span>
+              </div>
+            </div>
+            <ul class="plan-features">
+              <li><i data-lucide="check"></i> Proyectos ilimitados</li>
+              <li><i data-lucide="check"></i> <strong>Reconstrucción HQ con InstantMesh</strong></li>
+              <li><i data-lucide="check"></i> Copiloto de IA y Auditor de normativa</li>
+              <li><i data-lucide="check"></i> Catálogo completo de materiales PBR</li>
+              <li><i data-lucide="check"></i> Prioridad en colas de inferencia</li>
+              <li><i data-lucide="check"></i> Soporte técnico prioritario</li>
+            </ul>
+            <a href="#visor-interactivo" class="btn btn-primary btn-block shadow-glow">Acceso Pro</a>
+          </div>
+
+          <!-- Studio Plan -->
+          <div class="pricing-card glass-panel">
+            <div class="plan-header">
+              <h3 class="plan-name">Studio Enterprise</h3>
+              <p class="plan-desc">Para estudios de arquitectura, constructoras y equipos multidisciplinares.</p>
+              <div class="plan-price">
+                <span class="currency">$</span><span class="amount">89</span>
+                <span class="period">/ mes</span>
+              </div>
+            </div>
+            <ul class="plan-features">
+              <li><i data-lucide="check"></i> Todo lo incluido en el plan Pro</li>
+              <li><i data-lucide="check"></i> <strong>Workspaces compartidos y roles</strong></li>
+              <li><i data-lucide="check"></i> Exportaciones BIM y cómputos métricos</li>
+              <li><i data-lucide="check"></i> Enlaces de presentación con marca blanca</li>
+              <li><i data-lucide="check"></i> Despliegue dedicado on-premise disponible</li>
+            </ul>
+            <a href="#visor-interactivo" class="btn btn-glass btn-block">Contactar Ventas</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq-section" id="faq">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-badge"><i data-lucide="help-circle"></i> Preguntas Frecuentes</div>
+          <h2 class="section-title">Todo lo que necesitas saber sobre <span class="text-gradient">ArchVision 3D AI</span></h2>
+        </div>
+
+        <div class="faq-accordion-container">
+          <div class="faq-item glass-panel">
+            <button class="faq-trigger">
+              <span>¿Qué diferencia a ArchVision de otros generadores 3D basados en IA?</span>
+              <i data-lucide="chevron-down" class="faq-chevron"></i>
+            </button>
+            <div class="faq-content">
+              <p>
+                La mayoría de generadores entregan una sola malla "estática" o "muerta", imposible de modificar constructivamente. ArchVision utiliza la IA para crear el borrador, pero lo descompone en <strong>entidades arquitectónicas paramétricas vivas</strong> (muros, puertas con vanos booleanos, losas y cubiertas), permitiéndote editar cada medida y parámetro con precisión milimétrica.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item glass-panel">
+            <button class="faq-trigger">
+              <span>¿Cómo funciona el motor de reconstrucción desde imágenes?</span>
+              <i data-lucide="chevron-down" class="faq-chevron"></i>
+            </button>
+            <div class="faq-content">
+              <p>
+                Utilizamos un microservicio en FastAPI conectado a modelos neuronales de vanguardia (TripoSR para inferencia ultrarrápida y el motor de difusión multicámara InstantMesh para alta fidelidad geométrica). El pipeline remueve el fondo con RMBG, genera la malla inicial, aplica alineación PCA, reconstrucción superficial Poisson para cerrar huecos y transfiere los colores RGBA por k-d Tree.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item glass-panel">
+            <button class="faq-trigger">
+              <span>¿Puedo importar planos arquitectónicos dibujados a mano o en AutoCAD?</span>
+              <i data-lucide="chevron-down" class="faq-chevron"></i>
+            </button>
+            <div class="faq-content">
+              <p>
+                Sí. Puedes subir cualquier imagen de plano en formato PNG, JPG o WebP. Solo debes indicar una medida de referencia conocida para calibrar la escala en metros, y el motor de visión computacional detectará automáticamente las líneas de muros para levantarlos en 3D de inmediato.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item glass-panel">
+            <button class="faq-trigger">
+              <span>¿Qué tecnologías componen el núcleo técnico de la plataforma?</span>
+              <i data-lucide="chevron-down" class="faq-chevron"></i>
+            </button>
+            <div class="faq-content">
+              <p>
+                El proyecto está construido como un monorepo TypeScript estricto con Next.js 15, React 19, Three.js / React Three Fiber para renderizado 3D en WebGL, Prisma ORM conectado a PostgreSQL en Supabase, y un backend de IA independiente en Python con FastAPI y PyTorch.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom CTA Banner -->
+    <section class="section cta-banner-section">
+      <div class="container">
+        <div class="cta-banner-card glass-panel text-center">
+          <div class="cta-badge"><i data-lucide="zap"></i> Empieza a Diseñar</div>
+          <h2 class="cta-title">Lleva tu Proceso Arquitectónico a la Era de la <span class="text-gradient">Inteligencia Artificial</span></h2>
+          <p class="cta-desc">
+            Únete a la plataforma que combina la velocidad de la IA con el rigor y la precisión paramétrica que exige la construcción real.
+          </p>
+          <div class="cta-actions">
+            <a href="#visor-interactivo" class="btn btn-lg btn-primary shadow-glow">
+              <i data-lucide="box"></i> Probar Simulador 3D
+            </a>
+            <a href="#roadmap" class="btn btn-lg btn-glass">
+              <i data-lucide="compass"></i> Ver Próximos Hitos
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="brand-logo">
+          <div class="logo-symbol">
+            <i data-lucide="box"></i>
+          </div>
+          <div class="logo-text">
+            <span class="logo-title">ArchVision <span class="badge-ai">3D AI</span></span>
+          </div>
+        </div>
+        <p class="footer-tagline">
+          Plataforma de modelado arquitectónico paramétrico impulsada por Inteligencia Artificial y Visión Computacional.
+        </p>
+        <div class="footer-disclaimer">
+          <i data-lucide="alert-circle"></i>
+          <span>Aviso: Los modelos generados automáticamente deben ser revisados dimensionalmente antes de su uso para presupuesto o construcción oficial.</span>
+        </div>
+      </div>
+
+      <div class="footer-links-group">
+        <h4>Plataforma</h4>
+        <ul>
+          <li><a href="#filosofia">Filosofía Paramétrica</a></li>
+          <li><a href="#capacidades">Capacidades & Herramientas</a></li>
+          <li><a href="#visor-interactivo">Simulador 3D en Vivo</a></li>
+          <li><a href="#arquitectura">Arquitectura Técnica</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-group">
+        <h4>Inteligencia & Futuro</h4>
+        <ul>
+          <li><a href="#asistente">Copiloto de IA & Auditoría</a></li>
+          <li><a href="#roadmap">Próximos Hitos de Desarrollo</a></li>
+          <li><a href="#planes">Planes & Facturación Wompi</a></li>
+          <li><a href="#faq">Preguntas Frecuentes</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-group">
+        <h4>Tecnologías</h4>
+        <div class="tech-stack-pills">
+          <span class="tech-pill">Next.js 15</span>
+          <span class="tech-pill">Three.js</span>
+          <span class="tech-pill">FastAPI</span>
+          <span class="tech-pill">TripoSR</span>
+          <span class="tech-pill">InstantMesh</span>
+          <span class="tech-pill">Supabase</span>
+          <span class="tech-pill">Prisma</span>
+          <span class="tech-pill">TypeScript</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 ArchVision 3D AI. Todos los derechos reservados. Diseñado para arquitectura paramétrica de vanguardia.</p>
+      <div class="footer-socials">
+        <span class="version-tag">Build v2.4.0 — Production Ready</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
