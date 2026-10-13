@@ -5,7 +5,6 @@ import Hero from './components/Hero';
 import Philosophy from './components/Philosophy';
 import Capabilities from './components/Capabilities';
 import Architecture from './components/Architecture';
-import Assistant from './components/Assistant';
 import Roadmap from './components/Roadmap';
 import Pricing from './components/Pricing';
 import FAQ from './components/FAQ';
@@ -75,7 +74,6 @@ export default function App() {
         <Philosophy />
         <Capabilities />
         <Architecture />
-        <Assistant />
         <Roadmap />
         <Pricing />
         <FAQ />

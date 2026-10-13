@@ -66,14 +66,14 @@ export default function Hero({ onOpenModal }) {
           </h1>
 
           <p className="hero-description animate-fade-in delay-2">
-            <strong>ArchVision 3D AI</strong> fusiona visión artificial profunda (TripoSR & InstantMesh HQ), extrusión vectorial de planos 2D y un motor paramétrico en Three.js. <em>La Inteligencia Artificial construye la base geométrica, mientras tú mantienes el control dimensional absoluto.</em>
+            <strong>ArchVision 3D AI</strong> va a ser una plataforma web que convierte fotografías, planos, croquis y medidas en un modelo tridimensional editable de una vivienda o edificación. Funciona desde el navegador, por lo que no se necesita una instalación o haber estudiado software de diseño arquitectónico.
           </p>
 
           <div className="hero-actions animate-fade-in delay-3">
-            <a href="#asistente" className="btn btn-lg btn-primary shadow-glow">
-              <Sparkles size={20} />
-              <span>Explorar Copiloto IA</span>
-            </a>
+            <button type="button" onClick={onOpenModal} className="btn btn-lg btn-primary shadow-glow">
+              <Eye size={20} />
+              <span>Ver Demostración 3D</span>
+            </button>
             <a href="#capacidades" className="btn btn-lg btn-glass">
               <Sparkles size={20} />
               <span>Ver Capacidades</span>

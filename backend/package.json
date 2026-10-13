@@ -8,6 +8,7 @@
     "dev": "node --watch src/index.js"
   },
   "dependencies": {
+    "archvision-3d-ai-monorepo": "file:..",
     "cors": "^2.8.5",
     "express": "^4.19.2"
   },

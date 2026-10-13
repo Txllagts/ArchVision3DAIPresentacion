@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, Cpu, Box, Layers, Bot, Sparkles, Play } from 'lucide-react';
+import { Compass, Cpu, Box, Layers, CreditCard, Sparkles } from 'lucide-react';
 
 export default function MobileDrawer({ isOpen, onClose }) {
   return (
@@ -22,8 +22,8 @@ export default function MobileDrawer({ isOpen, onClose }) {
             </a>
           </li>
           <li>
-            <a href="#asistente" className="mobile-nav-link" onClick={onClose}>
-              <Bot size={18} /> Copiloto Arquitectónico
+            <a href="#planes" className="mobile-nav-link" onClick={onClose}>
+              <CreditCard size={18} /> Planes y Precios
             </a>
           </li>
           <li>
@@ -33,8 +33,8 @@ export default function MobileDrawer({ isOpen, onClose }) {
           </li>
         </ul>
         <div className="mobile-drawer-footer">
-          <a href="#asistente" className="btn btn-primary btn-block" onClick={onClose}>
-            <Bot size={18} /> Probar Copiloto IA
+          <a href="#planes" className="btn btn-primary btn-block" onClick={onClose}>
+            <CreditCard size={18} /> Ver Planes
           </a>
         </div>
       </div>

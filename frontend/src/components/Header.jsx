@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Sun, Moon, ArrowUpRight, Menu, X } from 'lucide-react';
+import { Box, Sun, Moon, Menu, X } from 'lucide-react';
 
 export default function Header({ theme, toggleTheme, isMobileOpen, toggleMobileMenu }) {
   return (
@@ -20,7 +20,7 @@ export default function Header({ theme, toggleTheme, isMobileOpen, toggleMobileM
             <li><a href="#filosofia" className="nav-link">Filosofía</a></li>
             <li><a href="#capacidades" className="nav-link">Capacidades</a></li>
             <li><a href="#arquitectura" className="nav-link">Arquitectura</a></li>
-            <li><a href="#asistente" className="nav-link">Asistente IA</a></li>
+            <li><a href="#planes" className="nav-link">Planes</a></li>
             <li>
               <a href="#roadmap" className="nav-link highlight-link">
                 <span className="radar-dot"></span> Próximos Hitos
@@ -41,11 +41,6 @@ export default function Header({ theme, toggleTheme, isMobileOpen, toggleMobileM
           >
             {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           </button>
-
-          <a href="#asistente" className="btn btn-sm btn-primary header-cta">
-            <span>Probar Asistente</span>
-            <ArrowUpRight size={16} />
-          </a>
 
           {/* Mobile Menu Toggle */}
           <button 

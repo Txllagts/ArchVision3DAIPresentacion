@@ -35,7 +35,6 @@ export default function Footer() {
         <div className="footer-links-group">
           <h4>Inteligencia & Futuro</h4>
           <ul>
-            <li><a href="#asistente">Copiloto de IA & Auditoría</a></li>
             <li><a href="#roadmap">Próximos Hitos de Desarrollo</a></li>
             <li><a href="#planes">Planes & Facturación Wompi</a></li>
             <li><a href="#faq">Preguntas Frecuentes</a></li>
